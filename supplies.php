@@ -53,15 +53,11 @@ if (!isset($_SESSION['user_name'])) {
 							<h6 class="my-3 mx-4 fw-semibold">Filtrar por Categoría</h6>
 							<ul class="list-group list-cats pt-2 border-bottom rounded-0">
 							</ul>
-							<ul class="list-group pt-2 border-bottom rounded-0">
-								<h6 class="my-3 mx-4 fw-semibold">Filtrar por Tienda / Proveedor</h6>
-								<li class="list-group-item border-0 p-0 mx-4 mb-2">
-									<a class="d-flex align-items-center gap-2 list-group-item-action text-dark px-3 py-6 rounded-1" href="javascript:void(0)"><i class="ti ti-ad-2 fs-5"></i>Newest
-									</a>
-								</li>
+							<h6 class="my-3 mx-4 fw-semibold">Filtrar por Tienda / Proveedor</h6>
+							<ul class="list-group list-stores pt-2 border-bottom rounded-0">
 							</ul>
+							<h6 class="mt-4 mb-3 mx-4 fw-semibold">Ordenar por</h6>
 							<div class="by-gender border-bottom rounded-0">
-								<h6 class="mt-4 mb-3 mx-4 fw-semibold">Ordenar por</h6>
 								<div class="pb-4 px-4">
 									<div class="form-check py-2 mb-0">
 										<input class="form-check-input p-2" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
@@ -73,6 +69,11 @@ if (!isset($_SESSION['user_name'])) {
 							</div>
 							<div class="p-4">
 								<a href="javascript:void(0)" class="btn btn-primary w-100">Limpiar filtros</a>
+							</div>
+							<div class="p-4">
+								<a type="button" class="btn btn-outline-warning w-100" data-bs-toggle="modal" data-bs-target="#modalSupplie">
+									Nuevo insumo
+								</a>
 							</div>
 						</div>
 						<div class="card-body p-4 pb-0">
@@ -87,131 +88,33 @@ if (!isset($_SESSION['user_name'])) {
 								</form>
 							</div>
 							<div class="row">
-								<div class="col-sm-6 col-xl-4">
-									<div class="card hover-img overflow-hidden rounded-2">
-										<div class="position-relative">
-											<a href="javascript:void(0)"><img src="https://static.wixstatic.com/media/f172bd_8b2bbf8ff78d45039aa07a568b8d7f58~mv2.jpg" class="card-img-top rounded-0" alt="..."></a>
-											<a href="javascript:void(0)" class="text-bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i class="ti ti-basket fs-4"></i></a>
-										</div>
-										<div class="card-body pt-3 p-4">
-											<h6 class="fw-semibold fs-4">Rod</h6>
-											<div class="d-flex align-items-center justify-content-between">
-												<h6 class="fw-semibold fs-4 mb-0">$285 <span class="ms-2 fw-normal text-muted fs-3"></span></h6>
-												<ul class="list-unstyled d-flex align-items-center mb-0">
-													<li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a>
-													</li>
-													<li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a>
-													</li>
-													<li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a>
-													</li>
-													<li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a>
-													</li>
-													<li><a class="" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-												</ul>
+								<?php for ($i = 0; $i < 4; $i++) { ?>
+									<!-- <div class="col-lg-3 col-6 mx-auto">
+										<div class="card hover-img overflow-hidden rounded-2">
+											<div class="position-relative">
+												<a href="javascript:void(0)"><img src="https://static.wixstatic.com/media/f172bd_8b2bbf8ff78d45039aa07a568b8d7f58~mv2.jpg" class="img-fluid" alt="..." width="200px" height="200px"></a>
+												<a href="javascript:void(0)" class="text-bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i class="ti ti-pencil fs-4"></i></a>
+											</div>
+											<div class="card-body pt-3 p-4">
+												<h6 class="fw-semibold fs-4">Jeringa 3 ML</h6>
+												<div class="d-flex align-items-center justify-content-between">
+													<h6 class="fw-semibold fs-4 mb-0"> <span class="ms-2 fw-normal text-muted fs-3"></span></h6>
+												</div>
 											</div>
 										</div>
-									</div>
-								</div>
-								<div class="col-sm-6 col-xl-4">
-									<div class="card hover-img overflow-hidden rounded-2">
-										<div class="position-relative">
-											<a href="javascript:void(0)"><img src="https://static.wixstatic.com/media/f172bd_8b2bbf8ff78d45039aa07a568b8d7f58~mv2.jpg" class="card-img-top rounded-0" alt="..."></a>
-
-										</div>
-										<div class="card-body pt-3 p-4">
-											<h6 class="fw-semibold fs-4">MacBook Air Pro</h6>
-											<div class="d-flex align-items-center justify-content-between">
-												<h6 class="fw-semibold fs-4 mb-0">$650 <span class="ms-2 fw-normal text-muted fs-3"><del>$900</del></span></h6>
-												<ul class="list-unstyled d-flex align-items-center mb-0">
-													<li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a>
-													</li>
-													<li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a>
-													</li>
-													<li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a>
-													</li>
-													<li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a>
-													</li>
-													<li><a class="" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
+									</div> -->
+								<?php } ?>
 							</div>
 						</div>
 						<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
 							<div class="offcanvas-body shop-filters w-100 p-0">
-								<ul class="list-group pt-2 border-bottom rounded-0">
-									<h6 class="my-3 mx-4 fw-semibold">Filter by Category</h6>
-									<li class="list-group-item border-0 p-0 mx-4 mb-2">
-										<a class="d-flex align-items-center gap-2 list-group-item-action text-dark px-3 py-6 rounded-1" href="javascript:void(0)"><i class="ti ti-circles fs-5"></i>All
-										</a>
-									</li>
-									<li class="list-group-item border-0 p-0 mx-4 mb-2">
-										<a class="d-flex align-items-center gap-2 list-group-item-action text-dark px-3 py-6 rounded-1" href="javascript:void(0)"><i class="ti ti-hanger fs-5"></i>Fashion
-										</a>
-									</li>
-									<li class="list-group-item border-0 p-0 mx-4 mb-2">
-										<a class="d-flex align-items-center gap-2 list-group-item-action text-dark px-3 py-6 rounded-1" href="javascript:void(0)"><i class="ti ti-notebook fs-5"></i></i>Books
-										</a>
-									</li>
-									<li class="list-group-item border-0 p-0 mx-4 mb-2">
-										<a class="d-flex align-items-center gap-2 list-group-item-action text-dark px-3 py-6 rounded-1" href="javascript:void(0)"><i class="ti ti-mood-smile fs-5"></i>Toys
-										</a>
-									</li>
-									<li class="list-group-item border-0 p-0 mx-4 mb-2">
-										<a class="d-flex align-items-center gap-2 list-group-item-action text-dark px-3 py-6 rounded-1" href="javascript:void(0)"><i class="ti ti-device-laptop fs-5"></i>Electronics
-										</a>
-									</li>
+								<h6 class="my-3 mx-4 fw-semibold">Filtrar por Salas</h6>
+								<ul class="list-group list-rooms pt-2 border-bottom rounded-0">
 								</ul>
-								<ul class="list-group pt-2 border-bottom rounded-0">
-									<h6 class="my-3 mx-4 fw-semibold">Sort By</h6>
-									<li class="list-group-item border-0 p-0 mx-4 mb-2">
-										<a class="d-flex align-items-center gap-2 list-group-item-action text-dark px-3 py-6 rounded-1" href="javascript:void(0)"><i class="ti ti-ad-2 fs-5"></i>Newest
-										</a>
-									</li>
-									<li class="list-group-item border-0 p-0 mx-4 mb-2">
-										<a class="d-flex align-items-center gap-2 list-group-item-action text-dark px-3 py-6 rounded-1" href="javascript:void(0)"><i class="ti ti-sort-ascending-2 fs-5"></i>Price: High-Low
-										</a>
-									</li>
-									<li class="list-group-item border-0 p-0 mx-4 mb-2">
-										<a class="d-flex align-items-center gap-2 list-group-item-action text-dark px-3 py-6 rounded-1" href="javascript:void(0)"><i class="ti ti-sort-descending-2 fs-5"></i></i>Price: Low-High
-										</a>
-									</li>
-									<li class="list-group-item border-0 p-0 mx-4 mb-2">
-										<a class="d-flex align-items-center gap-2 list-group-item-action text-dark px-3 py-6 rounded-1" href="javascript:void(0)"><i class="ti ti-ad-2 fs-5"></i>Discounted
-										</a>
-									</li>
+								<h6 class="my-3 mx-4 fw-semibold">Filtrar por Salas</h6>
+								<ul class="list-group list-cats pt-2 border-bottom rounded-0">
 								</ul>
-								<div class="by-gender border-bottom rounded-0">
-									<h6 class="mt-4 mb-3 mx-4 fw-semibold">By Gender</h6>
-									<div class="pb-4 px-4">
-										<div class="form-check py-2 mb-0">
-											<input class="form-check-input p-2" type="radio" name="exampleRadios" id="exampleRadios10" value="option1" checked>
-											<label class="form-check-label d-flex align-items-center ps-2" for="exampleRadios10">
-												All
-											</label>
-										</div>
-										<div class="form-check py-2 mb-0">
-											<input class="form-check-input p-2" type="radio" name="exampleRadios" id="exampleRadios11" value="option1">
-											<label class="form-check-label d-flex align-items-center ps-2" for="exampleRadios11">
-												Men
-											</label>
-										</div>
-										<div class="form-check py-2 mb-0">
-											<input class="form-check-input p-2" type="radio" name="exampleRadios" id="exampleRadios12" value="option1">
-											<label class="form-check-label d-flex align-items-center ps-2" for="exampleRadios12">
-												Women
-											</label>
-										</div>
-										<div class="form-check py-2 mb-0">
-											<input class="form-check-input p-2" type="radio" name="exampleRadios" id="exampleRadios13" value="option1">
-											<label class="form-check-label d-flex align-items-center ps-2" for="exampleRadios13">
-												Kids
-											</label>
-										</div>
-									</div>
-								</div>
+								<h6 class="mt-4 mb-3 mx-4 fw-semibold">Filtrar por Tienda / Proveedor</h6>
 								<div class="by-pricing border-bottom rounded-0">
 									<h6 class="mt-4 mb-3 mx-4 fw-semibold">By Pricing</h6>
 									<div class="pb-4 px-4">
@@ -247,22 +150,12 @@ if (!isset($_SESSION['user_name'])) {
 										</div>
 									</div>
 								</div>
-								<div class="by-colors border-bottom rounded-0">
-									<h6 class="mt-4 mb-3 mx-4 fw-semibold">By Colors</h6>
-									<div class="pb-4 px-4">
-										<ul class="list-unstyled d-flex flex-wrap align-items-center gap-2 mb-0">
-											<li class="shop-color-list"><a class="shop-colors-item rounded-circle d-block shop-colors-1" href="javascript:void(0)"></a></li>
-											<li class="shop-color-list"><a class="shop-colors-item rounded-circle d-block shop-colors-2" href="javascript:void(0)"></a></li>
-											<li class="shop-color-list"><a class="shop-colors-item rounded-circle d-block shop-colors-3" href="javascript:void(0)"></a></li>
-											<li class="shop-color-list"><a class="shop-colors-item rounded-circle d-block shop-colors-4" href="javascript:void(0)"></a></li>
-											<li class="shop-color-list"><a class="shop-colors-item rounded-circle d-block shop-colors-5" href="javascript:void(0)"></a></li>
-											<li class="shop-color-list"><a class="shop-colors-item rounded-circle d-block shop-colors-6" href="javascript:void(0)"></a></li>
-											<li class="shop-color-list"><a class="shop-colors-item rounded-circle d-block shop-colors-7" href="javascript:void(0)"></a></li>
-										</ul>
-									</div>
-								</div>
 								<div class="p-4">
-									<a href="javascript:void(0)" class="btn btn-primary w-100">Reset Filters</a>
+									<a href="javascript:void(0)" class="btn btn-primary w-100">Limpiar filtros</a>
+								</div>
+
+								<div class="p-4">
+									<a href="javascript:void(0)" class="btn btn-primary w-100">Agregar nuevo insumo</a>
 								</div>
 							</div>
 						</div>
@@ -275,6 +168,43 @@ if (!isset($_SESSION['user_name'])) {
 
 	</div>
 
+	<!-- Modal -->
+	<div class="modal fade" id="modalSupplie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Gestionar insumos</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form id="add_supplie" method="POST" enctype="multipart/form-data">
+						<div class="mb-3">
+							<input type="hidden" class="form-control" name="supplie_id" id="supplie_id" value=0>
+							<label>Nombre del Insumo:</label>
+							<input type="text" class="form-control" name="supplie_name" id="supplie_name" required>
+						</div>
+						<div class="mb-3">
+							<label>Pertenece a la categoría:</label>
+							<select class="form-control" name="supplie_cat" id="supplie_cat" required>
+							</select>
+						</div>
+						<div class="mb-3">
+							<label>Suele comprarse en:</label>
+							<select class="form-control" name="supplie_store" id="supplie_store">
+							</select>
+						</div>
+						<div class="mb-3">
+							<label for="imagen">Selecciona una imagen de referencia:</label>
+							<input type="file" class="form-control" name="supplie_img" id="supplie_img" accept="image/*">
+						</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-xs btn-outline-success" type="submit">Guardar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!--  Customizer -->
 	<!--  Import Js Files -->
 	<script src="assets/libs/jquery/dist/jquery.min.js"></script>
@@ -286,11 +216,43 @@ if (!isset($_SESSION['user_name'])) {
 
 	<script src="assets/js/custom.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script src="assets/js/contact.js"></script>
 	<script>
 		$(document).ready(function() {
 			getRooms();
 			getCats();
+			getStores();
+
+			$("#add_supplie").on("submit", function(e) {
+				e.preventDefault();
+				let url = './scripts/add/supply.php';
+
+				let formTexts = $(this).serializeArray();
+				let formData = new FormData();
+				$.each(formTexts, function(i, field) {
+					formData.append(field.name, field.value);
+				});
+				formData.append('supplie_img', $('#supplie_img')[0].files[0]);
+
+				$.ajax({
+						data: formData,
+						processData: false,
+						contentType: false,
+						dataType: "json",
+						method: "POST",
+						url: url,
+					})
+					.done(function(response) {
+						if (response.success) {
+							$("#modalSupplie").modal('hide');
+
+							sweetAlert(response.alert_title, response.alert_text, 'success', true);
+						}
+					})
+					.fail(function(response) {
+						console.log(response);
+						sweetAlert('Ocurrió un error', 'Contacta a administración', 'error', false);
+					});
+			});
 
 			function getRooms() {
 				$.ajax({
@@ -300,7 +262,7 @@ if (!isset($_SESSION['user_name'])) {
 					})
 					.done(function(response) {
 						$(".list-rooms").html("");
-						console.log(response.rooms)
+
 						if (response.registers) {
 							$.each(response.rooms, function(index, room) {
 								$('.list-rooms').append(`
@@ -310,7 +272,8 @@ if (!isset($_SESSION['user_name'])) {
 										</a>
 									</li>
                   <!-- end row -->
-              `);
+              	`);
+
 							});
 						} else {
 							$('.list-rooms').append(`No se encontraron registros`);
@@ -329,9 +292,16 @@ if (!isset($_SESSION['user_name'])) {
 					})
 					.done(function(response) {
 						$(".list-cats").html("");
-						console.log(response.cats)
 						if (response.registers) {
-							$.each(response.cats, function(index, cats) {
+							var catSelect = $("#supplie_cat");
+
+							catSelect.empty();
+							var defaultOption = new Option('Selecciona', 0, true, true);
+							defaultOption.disabled = true;
+							catSelect.append(defaultOption);
+
+							$.each(response.cats, function(index, cat) {
+
 								$('.list-cats').append(`
                   <!-- start row -->
 									<li data-catid="${cat.id}" class="list-group-item border-0 p-0 mx-4 mb-2">
@@ -339,8 +309,13 @@ if (!isset($_SESSION['user_name'])) {
 										</a>
 									</li>
                   <!-- end row -->
-              `);
+              	`);
+								var newCat = new Option(cat.name, cat.id);
+								catSelect.append(newCat);
 							});
+
+
+
 						} else {
 							$('.list-rooms').append(`No se encontraron registros`);
 						}
@@ -348,6 +323,21 @@ if (!isset($_SESSION['user_name'])) {
 					.fail(function(response) {
 						console.log(response);
 					});
+			}
+
+			function getStores() {
+				return true;
+			}
+
+			function sweetAlert(title, text, icon, showbtn) {
+				Swal.fire({
+					title: title,
+					text: text,
+					icon: icon,
+					//backdrop: "linear-gradient(yellow, orange)",
+					background: "white",
+					showConfirmButton: showbtn, // No muestra el botón de confirmación
+				});
 			}
 		});
 	</script>
