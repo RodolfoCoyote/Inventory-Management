@@ -57,7 +57,7 @@ if (!isset($_SESSION['user_name'])) {
 							<ul class="list-group list-stores pt-2 border-bottom rounded-0">
 							</ul>
 							<h6 class="mt-4 mb-3 mx-4 fw-semibold">Ordenar por</h6>
-							<div class="by-gender border-bottom rounded-0">
+							<!-- <div class="by-gender border-bottom rounded-0">
 								<div class="pb-4 px-4">
 									<div class="form-check py-2 mb-0">
 										<input class="form-check-input p-2" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
@@ -66,7 +66,7 @@ if (!isset($_SESSION['user_name'])) {
 										</label>
 									</div>
 								</div>
-							</div>
+							</div> -->
 							<div class="p-4">
 								<a href="javascript:void(0)" class="btn btn-primary w-100">Limpiar filtros</a>
 							</div>
@@ -82,28 +82,12 @@ if (!isset($_SESSION['user_name'])) {
 									<i class="ti ti-menu-2 fs-6"></i>
 								</a>
 								<h5 class="fs-5 fw-semibold mb-0 d-none d-lg-block">Productos</h5>
-								<form class="position-relative">
+								<!-- <form class="position-relative">
 									<input type="text" class="form-control search-chat py-2 ps-5" id="text-srh" placeholder="Search Product">
 									<i class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
-								</form>
+								</form> -->
 							</div>
-							<div class="row">
-								<?php for ($i = 0; $i < 4; $i++) { ?>
-									<!-- <div class="col-lg-3 col-6 mx-auto">
-										<div class="card hover-img overflow-hidden rounded-2">
-											<div class="position-relative">
-												<a href="javascript:void(0)"><img src="https://static.wixstatic.com/media/f172bd_8b2bbf8ff78d45039aa07a568b8d7f58~mv2.jpg" class="img-fluid" alt="..." width="200px" height="200px"></a>
-												<a href="javascript:void(0)" class="text-bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i class="ti ti-pencil fs-4"></i></a>
-											</div>
-											<div class="card-body pt-3 p-4">
-												<h6 class="fw-semibold fs-4">Jeringa 3 ML</h6>
-												<div class="d-flex align-items-center justify-content-between">
-													<h6 class="fw-semibold fs-4 mb-0"> <span class="ms-2 fw-normal text-muted fs-3"></span></h6>
-												</div>
-											</div>
-										</div>
-									</div> -->
-								<?php } ?>
+							<div class="row" id="showProducts">
 							</div>
 						</div>
 						<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
@@ -193,19 +177,34 @@ if (!isset($_SESSION['user_name'])) {
 							<select class="form-control" name="supplie_store" id="supplie_store">
 							</select>
 						</div>
+						<div class="row" id="newRoom">
+							<div class="col-6">
+								<label>Se encuentra en la sala:</label>
+								<select class="form-control select_rooms" name="supplie_room_0" id="supplie_room_0" required>
+								</select>
+							</div>
+							<div class="col-6">
+								<label>Y debe tener en existencia:</label>
+								<input type="number" class="form-control" name="supplie_room_qty_0" id="supplie_room_qty_0" min=0 required>
+							</div>
+						</div>
+						<div class="d-flex justify-content-center">
+							<button class="mt-4 btn btn-outline-success" id="btnAddNewRoom">El insumo tambien aparece en...</button>
+						</div>
+						<div class="row text-center" id="addNewRoom">
+						</div>
+
 						<div class="mb-3">
 							<label for="imagen">Selecciona una imagen de referencia:</label>
 							<input type="file" class="form-control" name="supplie_img" id="supplie_img" accept="image/*">
 						</div>
-				</div>
-				<div class="modal-footer">
-					<button class="btn btn-xs btn-outline-success" type="submit">Guardar</button>
+						<div class="modal-footer">
+							<button class="btn btn-xs btn-outline-success" type="submit">Guardar</button>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!--  Customizer -->
 	<!--  Import Js Files -->
 	<script src="assets/libs/jquery/dist/jquery.min.js"></script>
 	<script src="assets/libs/simplebar/dist/simplebar.min.js"></script>
@@ -213,20 +212,25 @@ if (!isset($_SESSION['user_name'])) {
 	<!--  core files -->
 	<script src="assets/js/app.min.js"></script>
 	<script src="assets/js/sidebarmenu.js"></script>
-
 	<script src="assets/js/custom.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script>
+		var count_room = 0;
+
 		$(document).ready(function() {
 			getRooms();
 			getCats();
 			getStores();
+			getSupplies();
+
 
 			$("#add_supplie").on("submit", function(e) {
 				e.preventDefault();
 				let url = './scripts/add/supply.php';
 
 				let formTexts = $(this).serializeArray();
+
+				console.log(formTexts);
 				let formData = new FormData();
 				$.each(formTexts, function(i, field) {
 					formData.append(field.name, field.value);
@@ -243,6 +247,8 @@ if (!isset($_SESSION['user_name'])) {
 					})
 					.done(function(response) {
 						if (response.success) {
+							getSupplies();
+
 							$("#modalSupplie").modal('hide');
 
 							sweetAlert(response.alert_title, response.alert_text, 'success', true);
@@ -254,6 +260,46 @@ if (!isset($_SESSION['user_name'])) {
 					});
 			});
 
+			$("#btnAddNewRoom").on("click", function(e) {
+				e.preventDefault();
+				$.ajax({
+						dataType: "json",
+						method: "POST",
+						url: "./scripts/load/rooms.php",
+					})
+					.done(function(response) {
+						let newRoom = `
+							<div class="row" id="newRoom_${count_room}">
+								<div class="col-6">
+									<label>Se encuentra en la sala:</label>
+									<select class="form-control select_rooms" name="supplie_room_${count_room}" id="supplie_room_${count_room}" required>
+									</select>
+								</div>
+								<div class="col-6">
+									<label>Y debe tener en existencia:</label>
+									<input type="number" class="form-control" name="supplie_room_qty_${count_room}" id="supplie_room_qty_${count_room}" min=0 required>
+								</div>
+							</div>`;
+						$("#addNewRoom").append(newRoom);
+
+						var roomSelect = $("#supplie_room_" + count_room);
+						roomSelect.empty();
+						var defaultOption = new Option('Selecciona', 0, true, true);
+						defaultOption.disabled = true;
+						roomSelect.append(defaultOption);
+
+						$.each(response.rooms, function(index, room) {
+
+							var newRoom = new Option(room.name, room.id);
+							roomSelect.append(newRoom)
+						});
+					})
+					.fail(function(response) {});
+
+				count_room++;
+			});
+
+
 			function getRooms() {
 				$.ajax({
 						dataType: "json",
@@ -264,16 +310,25 @@ if (!isset($_SESSION['user_name'])) {
 						$(".list-rooms").html("");
 
 						if (response.registers) {
-							$.each(response.rooms, function(index, room) {
-								$('.list-rooms').append(`
-                  <!-- start row -->
-									<li data-roomid="${room.id}" class="list-group-item border-0 p-0 mx-4 mb-2">
-										<a class="li-room d-flex align-items-center gap-2 list-group-item-action text-dark px-3 py-6 rounded-1" href="#"><i class="ti ti-circles fs-5"></i>${room.name}
-										</a>
-									</li>
-                  <!-- end row -->
-              	`);
+							var roomSelect = $("#supplie_room_0");
 
+							roomSelect.empty();
+							var defaultOption = new Option('Selecciona', 0, true, true);
+							defaultOption.disabled = true;
+							roomSelect.append(defaultOption);
+
+							$.each(response.rooms, function(index, room) {
+
+								$('.list-rooms').append(`
+									<!-- start row -->
+										<li data-roomid="${room.id}" class="list-group-item border-0 p-0 mx-4 mb-2">
+											<a class="li-room d-flex align-items-center gap-2 list-group-item-action text-dark px-3 py-6 rounded-1" href="#"><i class="ti ti-circles fs-5"></i>${room.name}
+											</a>
+										</li>
+									<!-- end row -->
+								`);
+								var newRoom = new Option(room.name, room.id);
+								roomSelect.append(newRoom);
 							});
 						} else {
 							$('.list-rooms').append(`No se encontraron registros`);
@@ -329,6 +384,39 @@ if (!isset($_SESSION['user_name'])) {
 				return true;
 			}
 
+			function getSupplies() {
+				$("#showProducts").html("");
+				$.ajax({
+						dataType: "json",
+						method: "POST",
+						url: "./scripts/load/supplies_grid.php",
+					})
+					.done(function(response) {
+						$.each(response.supplies, function(index, supply) {
+							let supply_card = `
+							<div class="col-lg-3 col-6">
+								<div class="card hover-img overflow-hidden rounded-2">
+									<div class="position-relative">
+									<img src="assets/images/supplies/${supply.id}.jpg" class="img-fluid" alt="..." width="200px" height="200px">
+										<a href="#" class="text-bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3 seeDetails"><i class="ti ti-eye fs-4"></i></a>
+									</div>
+									<div class="card-body pt-3 p-4">
+										<h6 class="fw-semibold fs-4">${supply.name}</h6>
+										Debe haber: ${supply.initial_stock} <br>
+										En existencia: ${supply.current_stock}
+									</div>
+								</div>
+							</div>`;
+
+							$("#showProducts").append(supply_card);
+						});
+
+					})
+					.fail(function(response) {
+						console.log(response);
+					});
+			}
+
 			function sweetAlert(title, text, icon, showbtn) {
 				Swal.fire({
 					title: title,
@@ -339,6 +427,11 @@ if (!isset($_SESSION['user_name'])) {
 					showConfirmButton: showbtn, // No muestra el botón de confirmación
 				});
 			}
+		});
+
+		$(document).on("click", ".seeDetails", function(e) {
+			e.preventDefault();
+			$("#miModal").modal("show");
 		});
 	</script>
 </body>

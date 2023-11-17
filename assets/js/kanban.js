@@ -17,19 +17,21 @@ $(function () {
         //alert("stop");
       },
       update: function (event, ui) {
+        console.log(ui.item[0]);
         let item_draggable = $(ui.item[0]);
         let supplyid = item_draggable.data("supplyid");
-
+        let supplyname = item_draggable.data("supplyname");
+        let supplyqty = item_draggable.data("supplyqty");
         // Verifica si el supplyId ya está en el conjunto
         if (!usedSupplyIds.has(supplyid)) {
           // No está duplicado
           usedSupplyIds.add(supplyid);
-          openQtyModal(supplyid);
+          openQtyModal(supplyid, supplyname, supplyqty);
         } else {
           sweetAlert("Error", "Ya existe el elemento en la sala", "error");
           ui.item.remove(); // Elimina la card duplicada
         }
-        getSupplies();
+        //getSupplies();
         //alert("update");
       },
     });
@@ -58,12 +60,6 @@ $(function () {
     });
   }
 
-  function openQtyModal(supplyid) {
-    let src = "assets/images/supplies/" + supplyid + ".jpg";
-    $("#supply_img").attr("src", src);
-    $("#input_supply_id").val(supplyid);
-    $("#updateQtyModal").modal("show");
-  }
   mainKanbanSortable();
   childKanbanSortable();
 });
