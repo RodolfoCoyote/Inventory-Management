@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Isotope Demo</title>
+
+		<!-- jQuery -->
+		<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+		<!-- Isotope -->
+		<link rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.css">
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js"></script>
+
+		<style>
+    #product-container {
+      margin: 20px;
+    }
+
+    .product {
+      width: 100px;
+      height: 100px;
+      border: 1px solid #ddd;
+      margin: 10px;
+      padding: 10px;
+      display: inline-block;
+    }
+  </style>
+	</head>
+	<body>
+
+		<div id="filter-buttons">
+			<button data-filter="*">Todos</button>
+			<button data-filter=".category1">Categoría 1</button>
+			<button data-filter=".category2">Categoría 2</button>
+		</div>
+
+		<div id="product-container">
+			<div class="product category1 col-lg-3 col-6">
+				<div class="card hover-img overflow-hidden rounded-2">
+					<div class="position-relative">
+						<img src="assets/images/supplies/1.jpg"
+							class="img-fluid" alt="..." width="200px"
+							height="200px">
+						<a data-supplyid="1" href="#"
+							class="text-bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3 seeDetails"><i
+								class="ti ti-eye fs-4"></i></a>
+					</div>
+					<div class="card-body pt-3 p-4">
+						<h6 class="fw-semibold fs-4">Abatelenguas</h6>
+						<strong>Debe haber:</strong> 1 Paquete(s) <br>
+						<strong>En existencia:</strong> 1
+					</div>
+				</div>
+			</div>
+			<div class="product category1 col-lg-3 col-6">
+				<div class="card hover-img overflow-hidden rounded-2">
+					<div class="position-relative">
+						<img src="assets/images/supplies/1.jpg"
+							class="img-fluid" alt="..." width="200px"
+							height="200px">
+						<a data-supplyid="1" href="#"
+							class="text-bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3 seeDetails"><i
+								class="ti ti-eye fs-4"></i></a>
+					</div>
+					<div class="card-body pt-3 p-4">
+						<h6 class="fw-semibold fs-4">sisa</h6>
+						<strong>Debe haber:</strong> 1 Paquete(s) <br>
+						<strong>En existencia:</strong> 1
+					</div>
+				</div>
+			</div>
+			<div class="product category2 col-lg-3 col-6">
+				<div class="card hover-img overflow-hidden rounded-2">
+					<div class="position-relative">
+						<img src="assets/images/supplies/1.jpg"
+							class="img-fluid" alt="..." width="200px"
+							height="200px">
+						<a data-supplyid="1" href="#"
+							class="text-bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3 seeDetails"><i
+								class="ti ti-eye fs-4"></i></a>
+					</div>
+					<div class="card-body pt-3 p-4">
+						<h6 class="fw-semibold fs-4">sas</h6>
+						<strong>Debe haber:</strong> 1 Paquete(s) <br>
+						<strong>En existencia:</strong> 1
+					</div>
+				</div>
+			</div>
+			<!-- Agrega más productos según sea necesario -->
+		</div>
+
+		<script>
+    $(document).ready(function() {
+      var $productContainer = $('#product-container');
+
+      // Inicializar Isotope
+      $productContainer.isotope({
+        itemSelector: '.product'
+      });
+
+      // Manejar eventos de filtro
+      $('#filter-buttons').on('click', 'button', function() {
+        var filterValue = $(this).attr('data-filter');
+        $productContainer.isotope({ filter: filterValue });
+      });
+    });
+  </script>
+
+	</body>
+</html>

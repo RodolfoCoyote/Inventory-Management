@@ -12,7 +12,7 @@ $sql = "SELECT room_id, token FROM inv_temp_tokens WHERE user_id = $user_id;";
 $query = $conn->query($sql);
 
 if ($query->num_rows <= 0) {
-	header('Location: restock_request.php'); // Redirigir al formulario de inicio de sesión
+	header('Location: index.php'); // Redirigir al formulario de inicio de sesión
 }
 
 $row = $query->fetch_assoc();
@@ -29,15 +29,13 @@ $room_name = $row['name'];
 
 <head>
 	<!--  Title -->
-	<title>Mordenize</title>
+	<title>Registro de Inventario | Inventario RDI</title>
 	<!--  Required Meta Tag -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="handheldfriendly" content="true" />
 	<meta name="MobileOptimized" content="width" />
-	<meta name="description" content="Mordenize" />
 	<meta name="author" content="" />
-	<meta name="keywords" content="Mordenize" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<!--  Favicon -->
 	<link rel="shortcut icon" type="image/png" href="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico" />
@@ -73,7 +71,7 @@ $room_name = $row['name'];
 										<form>
 											<h3>¡Hola <?= $_SESSION['user_name']; ?>! Tienes un inventario en curso de <strong><?= $room_name; ?></strong><br>¿deseas continuarlo o comenzar uno nuevo?</h3>
 											<div class="btn-group mt-3" role="group" aria-label="Respuesta">
-												<a href="restock_request.php?continue=1" type="button" id="btnContinue" class="btn btn-primary mx-2">Continuar donde lo dejé</a>
+												<a href="index.php?continue=1" type="button" id="btnContinue" class="btn btn-primary mx-2">Continuar donde lo dejé</a>
 												<a href="scripts/delete/restock_request.php?token=<?= $token; ?>" type=" button" id="btnReset" class="btn btn-danger mx-2">Comenzar uno nuevo</a>
 											</div>
 										</form>

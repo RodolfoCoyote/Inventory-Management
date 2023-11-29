@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	// Recolectar los datos del POST
 	$uploadedFile = $_FILES['supplie_img'];
 	$supplie_name = $_POST['supplie_name'];
-	$supplie_measure = "Temp";
+	$supplie_measure = $_POST['supplie_measure'];
 	$supplie_image = "Temp";
 	$supplie_cat = $_POST['supplie_cat'];
 	$supplie_store = 1;

@@ -13,15 +13,13 @@ if (!isset($_SESSION['user_name'])) {
 
 <head>
 	<!--  Title -->
-	<title>Mordenize</title>
+	<title>Control de Categorías | Inventario RDI </title>
 	<!--  Required Meta Tag -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="handheldfriendly" content="true" />
 	<meta name="MobileOptimized" content="width" />
-	<meta name="description" content="Mordenize" />
 	<meta name="author" content="" />
-	<meta name="keywords" content="Mordenize" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<!--  Favicon -->
 	<link rel="shortcut icon" type="image/png" href="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico" />
@@ -53,15 +51,6 @@ if (!isset($_SESSION['user_name'])) {
 						<div class="row align-items-center">
 							<div class="col-12 text-center">
 								<h4 class="fw-semibold mb-8">CATEGORÍAS DE INSUMOS</h4>
-								<nav aria-label="breadcrumb">
-									<ol class="breadcrumb">
-										<li class="breadcrumb-item">
-											<a class="text-muted " href="./index.html"></a>
-										</li>
-										<li class="breadcrumb-item" aria-current="page">
-										</li>
-									</ol>
-								</nav>
 							</div>
 
 						</div>
@@ -71,13 +60,13 @@ if (!isset($_SESSION['user_name'])) {
 					<div class="col-12">
 						<div class="card card-body">
 							<div class="row">
-								<div class="col-md-4 col-xl-3">
+								<!-- <div class="col-md-4 col-xl-3">
 									<form class="position-relative">
 										<input type="text" class="form-control product-search ps-5" id="input-search" placeholder="Buscar..." />
 										<i class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
 									</form>
-								</div>
-								<div class="col-md-8 col-xl-9 text-end d-flex justify-content-md-end justify-content-center mt-3 mt-md-0">
+								</div> -->
+								<div class="col-md-12 col-xl-12 text-end d-flex justify-content-md-end justify-content-center mt-3 mt-md-0">
 									<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCat">
 										Nueva categoría
 									</button>

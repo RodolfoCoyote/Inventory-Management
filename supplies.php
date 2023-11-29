@@ -16,7 +16,6 @@ if (!isset($_SESSION['user_name'])) {
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="author" content="" />
-	<meta name="keywords" content="Mordenize" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<!--  Favicon -->
 	<link rel="shortcut icon" type="image/png" href="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico" />
@@ -24,6 +23,12 @@ if (!isset($_SESSION['user_name'])) {
 
 	<!-- Core Css -->
 	<link id="themeColors" rel="stylesheet" href="assets/css/styles.min.css" />
+
+	<style>
+		.highlight {
+			color: #e0ac44;
+		}
+	</style>
 </head>
 
 <body>
@@ -48,15 +53,19 @@ if (!isset($_SESSION['user_name'])) {
 						<div class="shop-filters flex-shrink-0 border-end d-none d-lg-block">
 							<h6 class="my-3 mx-4 fw-semibold">Filtrar por Salas</h6>
 							<ul class="list-group list-rooms pt-2 border-bottom rounded-0">
-
 							</ul>
 							<h6 class="my-3 mx-4 fw-semibold">Filtrar por Categoría</h6>
-							<ul class="list-group list-cats pt-2 border-bottom rounded-0">
-							</ul>
+							<div class="filter-buttons">
+								<li data-filter="*">Todos</li>
+								<ul class="list-group list-cats pt-2 border-bottom rounded-0">
+								</ul>
+							</div>
 							<h6 class="my-3 mx-4 fw-semibold">Filtrar por Tienda / Proveedor</h6>
-							<ul class="list-group list-stores pt-2 border-bottom rounded-0">
-							</ul>
-							<h6 class="mt-4 mb-3 mx-4 fw-semibold">Ordenar por</h6>
+							<div class="filter-buttons">
+								<ul class="list-group list-stores pt-2 border-bottom rounded-0">
+								</ul>
+							</div>
+							<!-- <h6 class="mt-4 mb-3 mx-4 fw-semibold">Ordenar por</h6> -->
 							<!-- <div class="by-gender border-bottom rounded-0">
 								<div class="pb-4 px-4">
 									<div class="form-check py-2 mb-0">
@@ -68,7 +77,7 @@ if (!isset($_SESSION['user_name'])) {
 								</div>
 							</div> -->
 							<div class="p-4">
-								<a href="javascript:void(0)" class="btn btn-primary w-100">Limpiar filtros</a>
+								<a href="supplies.php" class="btn btn-primary w-100">Limpiar filtros</a>
 							</div>
 							<div class="p-4">
 								<a type="button" class="btn btn-outline-warning w-100" data-bs-toggle="modal" data-bs-target="#modalSupplie">
@@ -82,6 +91,8 @@ if (!isset($_SESSION['user_name'])) {
 									<i class="ti ti-menu-2 fs-6"></i>
 								</a>
 								<h5 class="fs-5 fw-semibold mb-0 d-none d-lg-block">Productos</h5>
+								<input type="text" id="search" placeholder="Buscar por nombre">
+
 								<!-- <form class="position-relative">
 									<input type="text" class="form-control search-chat py-2 ps-5" id="text-srh" placeholder="Search Product">
 									<i class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
@@ -153,6 +164,23 @@ if (!isset($_SESSION['user_name'])) {
 	</div>
 
 	<!-- Modal -->
+	<div class="modal fade" id="viewSupplyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Gestionar insumos</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<form id="updateQtySupply" method="POST" action="#">
+					<div class="modal-body">
+					</div>
+					<div class="modal-footer">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
 	<div class="modal fade" id="modalSupplie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -166,6 +194,17 @@ if (!isset($_SESSION['user_name'])) {
 							<input type="hidden" class="form-control" name="supplie_id" id="supplie_id" value=0>
 							<label>Nombre del Insumo:</label>
 							<input type="text" class="form-control" name="supplie_name" id="supplie_name" required>
+						</div>
+						<div class="mb-3">
+							<label>Se mide en:</label>
+							<select id="supplie_measure" name="supplie_measure" class="form-control" required>
+								<option value="Caja">Caja</option>
+								<option value="Galón">Galón</option>
+								<option value="Garrafón">Garrafón</option>
+								<option value="Paquete">Paquete</option>
+								<option value="Pieza">Pieza</option>
+								<option value="Rollo">Rollo</option>
+							</select>
 						</div>
 						<div class="mb-3">
 							<label>Pertenece a la categoría:</label>
@@ -205,8 +244,9 @@ if (!isset($_SESSION['user_name'])) {
 			</div>
 		</div>
 	</div>
+
 	<!--  Import Js Files -->
-	<script src="assets/libs/jquery/dist/jquery.min.js"></script>
+	<script src=" assets/libs/jquery/dist/jquery.min.js"></script>
 	<script src="assets/libs/simplebar/dist/simplebar.min.js"></script>
 	<script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<!--  core files -->
@@ -214,6 +254,8 @@ if (!isset($_SESSION['user_name'])) {
 	<script src="assets/js/sidebarmenu.js"></script>
 	<script src="assets/js/custom.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js"></script>
+
 	<script>
 		var count_room = 0;
 
@@ -222,7 +264,6 @@ if (!isset($_SESSION['user_name'])) {
 			getCats();
 			getStores();
 			getSupplies();
-
 
 			$("#add_supplie").on("submit", function(e) {
 				e.preventDefault();
@@ -247,11 +288,12 @@ if (!isset($_SESSION['user_name'])) {
 					})
 					.done(function(response) {
 						if (response.success) {
-							getSupplies();
+							location.reload()
+							/*getSupplies();
 
 							$("#modalSupplie").modal('hide');
 
-							sweetAlert(response.alert_title, response.alert_text, 'success', true);
+							sweetAlert(response.alert_title, response.alert_text, 'success', true);*/
 						}
 					})
 					.fail(function(response) {
@@ -299,12 +341,48 @@ if (!isset($_SESSION['user_name'])) {
 				count_room++;
 			});
 
+			$(document).on("click", ".seeDetails", function(e) {
+				e.preventDefault();
+				const supply_id = $(this).data('supplyid');
+				getIndividualSupply(supply_id);
+			});
 
-			function getRooms() {
+			$(document).on("click", ".list-room-item", function(e) {
+				let roomid = $(this).data('roomid');
+				getSupplies(roomid);
+			});
+			$(document).on("submit", "#updateQtySupply", function(e) {
+				e.preventDefault();
+				let formData = $(this).serialize();
+				console.log(formData)
+				$.ajax({
+						data: formData,
+						dataType: "json",
+						method: "POST",
+						url: './scripts/update/individual_supply_qty.php',
+					})
+					.done(function(response) {
+						if (response.success) {
+							getSupplies();
+							$("#updateQtySupply").modal('hide');
+							sweetAlert(response.alert_title, response.alert_text, 'success', true);
+						}
+					})
+					.fail(function(response) {
+						console.log(response);
+						sweetAlert('Ocurrió un error', 'Contacta a administración', 'error', false);
+					});
+			});
+
+			$(document).on("click", "#closeViewSupplyModal", function(e) {
+				$("#viewSupplyModal").modal("hide");
+			});
+
+			function getRooms(roomid) {
 				$.ajax({
 						dataType: "json",
 						method: "POST",
-						url: "./scripts/load/rooms.php",
+						url: "./scripts/load/rooms.php?room_id=" + roomid,
 					})
 					.done(function(response) {
 						$(".list-rooms").html("");
@@ -321,7 +399,7 @@ if (!isset($_SESSION['user_name'])) {
 
 								$('.list-rooms').append(`
 									<!-- start row -->
-										<li data-roomid="${room.id}" class="list-group-item border-0 p-0 mx-4 mb-2">
+										<li data-roomid="${room.id}" class="list-room-item list-group-item border-0 p-0 mx-4 mb-2">
 											<a class="li-room d-flex align-items-center gap-2 list-group-item-action text-dark px-3 py-6 rounded-1" href="#"><i class="ti ti-circles fs-5"></i>${room.name}
 											</a>
 										</li>
@@ -358,21 +436,18 @@ if (!isset($_SESSION['user_name'])) {
 							$.each(response.cats, function(index, cat) {
 
 								$('.list-cats').append(`
-                  <!-- start row -->
-									<li data-catid="${cat.id}" class="list-group-item border-0 p-0 mx-4 mb-2">
+								<!-- start row -->
+									<li data-filter=".category${cat.id}" class="list-group-item border-0 p-0 mx-4 mb-2">
 										<a class="li-cat d-flex align-items-center gap-2 list-group-item-action text-dark px-3 py-6 rounded-1" href="#"><i class="ti ti-circles fs-5"></i>${cat.name}
 										</a>
 									</li>
-                  <!-- end row -->
-              	`);
+								<!-- end row -->
+							`);
 								var newCat = new Option(cat.name, cat.id);
 								catSelect.append(newCat);
 							});
-
-
-
 						} else {
-							$('.list-rooms').append(`No se encontraron registros`);
+							$('.list-cats').append(`No se encontraron registros`);
 						}
 					})
 					.fail(function(response) {
@@ -381,40 +456,187 @@ if (!isset($_SESSION['user_name'])) {
 			}
 
 			function getStores() {
-				return true;
-			}
-
-			function getSupplies() {
-				$("#showProducts").html("");
 				$.ajax({
 						dataType: "json",
 						method: "POST",
-						url: "./scripts/load/supplies_grid.php",
+						url: "./scripts/load/stores.php",
+					})
+					.done(function(response) {
+						$(".list-stores").html("");
+						if (response.registers) {
+							var storeSelect = $("#supplie_stores");
+
+							storeSelect.empty();
+							var defaultOption = new Option('Selecciona', 0, true, true);
+							defaultOption.disabled = true;
+							storeSelect.append(defaultOption);
+
+							$.each(response.stores, function(index, store) {
+
+								$('.list-stores').append(`
+								<!-- start row -->
+								<li data-filter=".store${store.id}" class="list-group-item border-0 p-0 mx-4 mb-2">
+									<a class="li-cat d-flex align-items-center gap-2 list-group-item-action text-dark px-3 py-6 rounded-1" href="#"><i class="ti ti-circles fs-5"></i>${store.name}
+									</a>
+								</li>
+								<!-- end row -->
+							`);
+								var newStore = new Option(store.name, store.id);
+								storeSelect.append(newStore);
+							});
+
+
+
+						} else {
+							$('.list-stores').append(`No se encontraron registros`);
+						}
+					})
+					.fail(function(response) {
+						console.log(response);
+					});
+			}
+
+			function activateIsotope() {
+				var $productContainer = $('#showProducts');
+
+				// Inicializar Isotope
+				var $grid = $productContainer.isotope({
+					itemSelector: '.product'
+				});
+				if ($grid.isotope('destroy')) {
+					console.log('Isotope se ha destruído');
+				}
+				var $grid = $productContainer.isotope({
+					itemSelector: '.product'
+				});
+				// Imprimir en la consola el número de elementos detectados por Isotope
+				var numberOfElements = $productContainer.data('isotope').filteredItems.length;
+				console.log('Isotope ha detectado ' + numberOfElements + ' elementos.');
+
+				// Manejar eventos de filtro
+				$('.filter-buttons').on('click', 'li', function() {
+					var filterValue = $(this).attr('data-filter');
+					$productContainer.isotope({
+						filter: filterValue
+					});
+				});
+
+				$("#search").keyup(function() {
+					var searchText = $(this).val().toLowerCase();
+					$grid.isotope({
+						filter: function() {
+							var text = $(this).text().toLowerCase();
+							return text.includes(searchText);
+						}
+					});
+				});
+			}
+
+			function getSupplies(roomid) {
+				$("#showProducts").html("");
+				let url = "./scripts/load/supplies_grid.php?room_id=" + roomid;
+				$.ajax({
+						dataType: "json",
+						method: "POST",
+						url: url,
 					})
 					.done(function(response) {
 						$.each(response.supplies, function(index, supply) {
 							let supply_card = `
-							<div class="col-lg-3 col-6">
+							<div class="product store${supply.store_id} category${supply.cat_id} col-lg-3 col-6">
 								<div class="card hover-img overflow-hidden rounded-2">
 									<div class="position-relative">
-									<img src="assets/images/supplies/${supply.id}.jpg" class="img-fluid" alt="..." width="200px" height="200px">
-										<a href="#" class="text-bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3 seeDetails"><i class="ti ti-eye fs-4"></i></a>
+									<img src="assets/images/supplies/${supply.id}.jpg" alt="..." width="200px" height="200px">
+										<a data-supplyid=${supply.id} href="#" class="text-bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3 seeDetails"><i class="ti ti-eye fs-4"></i></a>
 									</div>
 									<div class="card-body pt-3 p-4">
 										<h6 class="fw-semibold fs-4">${supply.name}</h6>
-										Debe haber: ${supply.initial_stock} <br>
-										En existencia: ${supply.current_stock}
+										<strong>Debe haber:</strong> ${supply.initial_stock} ${supply.measure}(s) <br>
+										<strong>En existencia:</strong> ${supply.current_stock}
 									</div>
 								</div>
 							</div>`;
 
 							$("#showProducts").append(supply_card);
 						});
-
+						activateIsotope();
 					})
 					.fail(function(response) {
 						console.log(response);
 					});
+			}
+
+			function getIndividualSupply(supply_id) {
+				$.ajax({
+						data: {
+							supply_id: supply_id
+						},
+						dataType: "json",
+						method: "POST",
+						url: './scripts/load/individual_supply.php',
+					})
+					.done(function(response) {
+						if (response.success) {
+							var count = 0;
+							let supply_info = response.supply_info;
+							console.log(response);
+							console.log(response.supply_info);
+
+							let modal_body =
+								`<div class="row">
+									<div class="col-3">
+										<img src="assets/images/supplies/${supply_info.id}.jpg" class="img-fluid">
+									</div>
+									<div class="col-9">
+										<div class="text-center">
+											<h4>Producto: <strong class="highlight">${supply_info.name}</strong> <br><br></h4>
+											Unidad de medida: <span class="highlight">${supply_info.measure}</span> <br>
+											Categoría: <span class="highlight">${supply_info.cat_name}</span> <br>
+										</div>
+									</div>
+								</div>
+								<div class=" col-12 text-center mt-4">
+									<h5 id="txtActualizar">Actualizar existencias:</h5>
+								</div>
+								`;
+
+							$("#viewSupplyModal .modal-body").html(modal_body);
+
+							$.each(response.supply_per_room, function(index, spr) {
+								if (spr.qty_requested > 0) {
+									let supply_per_room_info = (spr.qty_requested > 0) ?
+										`<div class="row mt-4">
+										<div class="col-9 d-flex align-items-center">
+											<h6>En ${spr.room_name}, de ${spr.qty_requested} solicitados, abastecí: </h6>
+											<input type="hidden" id="view_spr_id_${count}" name="view_spr_id_${count}" value="${spr.id}">
+										</div>
+										<div class="col-3 d-flex align-items-center">
+											<input type="number" id="view_qty_${count}" name="view_qty_${count}" min="0" max="${spr.qty_requested}" class="form-control ml-2" required>
+										</div>
+									</div>
+									<hr>` :
+										`
+									`;
+									$("#viewSupplyModal .modal-body").append(supply_per_room_info);
+									count++;
+								}
+							});
+							if (count > 0) {
+								$("#viewSupplyModal .modal-footer").html(`
+										<button class="btn btn-xs btn-outline-success" type="submit">Actualizar</button>`);
+							} else {
+								$("#txtActualizar").css('display', 'none');
+								$("#viewSupplyModal .modal-footer").html(`
+										<button type="button" class="btn btn-danger" id="closeViewSupplyModal">Cerrar</button>`);
+							}
+							$("#viewSupplyModal").modal("show");
+						}
+					})
+					.fail(function(response) {
+						console.log(response);
+						sweetAlert('Ocurrió un error', 'Contacta a administración', 'error', false);
+					});
+
 			}
 
 			function sweetAlert(title, text, icon, showbtn) {
@@ -427,11 +649,6 @@ if (!isset($_SESSION['user_name'])) {
 					showConfirmButton: showbtn, // No muestra el botón de confirmación
 				});
 			}
-		});
-
-		$(document).on("click", ".seeDetails", function(e) {
-			e.preventDefault();
-			$("#miModal").modal("show");
 		});
 	</script>
 </body>

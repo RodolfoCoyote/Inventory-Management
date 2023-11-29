@@ -11,11 +11,10 @@ if (!isset($_SESSION['user_name'])) {
 
 <head>
 	<!--  Title -->
-	<title>Insumos</title>
+	<title>Inventario RDI</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="author" content="" />
-	<meta name="keywords" content="Mordenize" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<!--  Favicon -->
 	<link rel="shortcut icon" type="image/png" href="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico" />
@@ -103,7 +102,7 @@ if (!isset($_SESSION['user_name'])) {
 						</div>
 						<div class="col-12">
 							<div class="text-center">
-								<button class="btn btn-outline-warning btn-lg" type="button">Enviar inventario a Jair</button>
+								<a class="btn btn-outline-warning btn-lg" type="button" href="scripts/add/restock_query.php">Enviar inventario a Jair</a>
 							</div>
 						</div>
 					</div>
@@ -220,7 +219,7 @@ if (!isset($_SESSION['user_name'])) {
 					})
 					.done(function(response) {
 						if (response.success) {
-							window.location.href = 'restock_request.php?continue=1';
+							window.location.href = 'index.php?continue=1';
 						}
 					})
 					.fail(function(response) {
